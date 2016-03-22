@@ -3,6 +3,11 @@
 # file, make changes to conda-forge.yaml and/or recipe/meta.yaml, and run
 # "conda-smithy regenerate".
 
+# Skipping commits with particular message or from user
+skip_commits:
+  message: .*
+  author: .*
+
 environment:
 
   CONDA_INSTALL_LOCN: "C:\\conda"
