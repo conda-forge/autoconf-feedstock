@@ -4,12 +4,14 @@
 language: generic
 
 os: osx
-osx_image: beta-xcode6.1
+osx_image: xcode6.4
 
 env:
   matrix:
     
     - CONDA_PERL=5.20.3.1
+    - CONDA_PERL=5.22.0.1
+    - CONDA_PERL=5.22.2.1
   global:
     # The BINSTAR_TOKEN secure variable. This is defined canonically in conda-forge.yml.
     - secure: "g1QpmtAagmIq0JcREYXlNYcc6ODXdZyGGEwf8egDExhuya1p6vHQ/7He8b69d+epaItZXo+8G0vt1lxa9c9BGlTgwY2cZLtsJIrQWA5evDipgWNpcknXSxFmij/z69NQoUvzmUH5RS5SHdgn6/FgolfMyrWJDCDTqaCxuRxw1+V1FJ0OmX8/YzM+ngV2w+ndJ2pL7eq1O8IBMlLTX8DGlq56HXVD5m6M5FMuYBzcvjJh0J0DIwW4KRtdktshYZhxb79RX87wuRhkl01vFAL7Ra/miESTIy6l9L4gX9nBK9gNQudaJIyn8qjVnTRUCzYwWGrtX541WiCGu67c/14zr4MwrvvLL0pCYF1g25E83wltsmYkIrSvaUzUBv0jH5d7geBl6uLXDObaaZqsl4M7mgu7iT2vkF/I1SZbnar7SEbzPMBxMCO/fG70/rz+Zbfj8nz7RgNeGkfx5NMMokWtIbGspICv4hpJxM05Jyl5YMHqMH2nvFSYmn1FLYHLQ6CFFAQN/uTfOaYZPL+V1UPymb+L4g2n/dRouPPtPtyskYz+6H8wBXn0wEcmeR0b1iyKmhQQYKiOl8tkbKeBHMVm2ZHvbrjtw3Bk7s+YlgDc6CL9KS7uZ9WPdk8jDKqgMlnZZ/7J5Z/c4zXo9l99UWnCEPJQ7Pca6nceO+/pF6U2lMs="
@@ -17,7 +19,7 @@ env:
 
 before_install:
     # Remove homebrew.
-    - brew remove --force $(brew list)
+    - brew remove --force --ignore-dependencies $(brew list)
     - brew cleanup -s
     - rm -rf $(brew --cache)
 
@@ -29,18 +31,14 @@ install:
       bash $MINICONDA_FILE -b
 
       source /Users/travis/miniconda3/bin/activate root
+      conda config --remove channels defaults
+      conda config --add channels defaults
       conda config --add channels conda-forge
       conda config --set show_channel_urls true
       conda install --yes --quiet conda-forge-build-setup
       source run_conda_forge_build_setup
 
-      # install conda-build 2.x to build with a long prefix
-      conda install --yes --quiet conda-build=2
-      conda info
-
 script:
   - conda build ./recipe
 
   - upload_or_check_non_existence ./recipe conda-forge --channel=main
-  # inspect the prefix lengths of the built packages
-  - conda inspect prefix-lengths /Users/travis/miniconda3/conda-bld/osx-64/*.tar.bz2
