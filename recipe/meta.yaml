@@ -21,6 +21,7 @@ requirements:
   build:
     #  make check requirement:
     - libtool
+    - make
   host:
     - m4
     - perl
