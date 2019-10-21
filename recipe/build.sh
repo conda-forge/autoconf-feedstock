@@ -1,11 +1,11 @@
 #!/bin/sh
 
-if [[ "${target_platform}" == "linux-ppc64le" ]]; then
-    pushd build-aux
-    rm config.guess
-    curl -o config.guess http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD
-    popd
-fi
+#if [[ "${target_platform}" == "linux-ppc64le" ]]; then
+#    pushd build-aux
+#    rm config.guess
+#    curl -o config.guess http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD
+#    popd
+#fi
 
 ./configure --prefix=${PREFIX}        \
             --libdir=${PREFIX}/lib    \
