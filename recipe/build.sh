@@ -7,6 +7,13 @@
 #    popd
 #fi
 
+pushd build-aux
+  rm config.guess
+  rm config.sub
+  cp $RECIPE_DIR/config.guess config.guess
+  cp $RECIPE_DIR/config.sub config.sub
+popd
+
 ./configure --prefix=${PREFIX}        \
             --libdir=${PREFIX}/lib    \
             --build=${BUILD}          \
