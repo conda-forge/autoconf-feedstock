@@ -1,4 +1,4 @@
-{% set version = "2.69" %}
+{% set version = "2.71" %}
 
 package:
   name: autoconf
@@ -6,7 +6,7 @@ package:
 
 source:
   url: http://ftp.gnu.org/gnu/autoconf/autoconf-{{ version }}.tar.gz
-  sha256: 954bd69b391edc12d6a4a51a2dd1476543da5c6bbf05a95b59dc0dd6fd4c2969
+  sha256: 431075ad0bf529ef13cb41e9042c542381103e80015686222b8a9d4abef42a1c
   patches:
     - 0001-autoscan-port-to-perl-5.17.patch
     - 0002-tests-avoid-spurious-test-failure-with-libtool-2.4.3.patch
@@ -14,7 +14,7 @@ source:
     - 0004-Add-use-lib-.-to-auto-scan-header-.in.patch
 
 build:
-  number: 10
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -40,7 +40,7 @@ about:
   home: http://www.gnu.org/software/autoconf/
   license: GPL-3.0
   license_file: COPYING
-  summary: 'Extensible M4 macros that produce shell scripts to configure software source code packages.'
+  summary: Extensible M4 macros that produce shell scripts to configure software source code packages.
   description: |
     Autoconf is a tool for producing shell scripts that automatically configure
     software source code packages to adapt to many kinds of Posix-like systems.
