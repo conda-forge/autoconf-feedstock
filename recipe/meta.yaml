@@ -1,3 +1,4 @@
+{% set bootstrapping = os.environ.get('CONDA_BUILD_BOOTSTRAPPING', '') %}
 {% set version = "2.69" %}
 
 package:
@@ -20,7 +21,10 @@ build:
 requirements:
   build:
     #  make check requirement:
+    #  we need to disable this for cyclic dependencies
+{% if boostrapping != 'yes' %}
     - libtool
+{% endif %}
     - make
     - curl
   host:
