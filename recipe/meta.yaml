@@ -1,4 +1,3 @@
-{% set bootstrapping = os.environ.get('CONDA_BUILD_BOOTSTRAPPING', '') %}
 {% set version = "2.69" %}
 
 package:
