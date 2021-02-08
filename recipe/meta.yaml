@@ -20,7 +20,10 @@ build:
 requirements:
   build:
     #  make check requirement:
+    #  we need to disable this for cyclic dependencies
+{% if boostrapping != 'yes' %}
     - libtool
+{% endif %}
     - make
     - curl
   host:
