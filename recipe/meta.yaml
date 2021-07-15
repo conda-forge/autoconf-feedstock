@@ -23,6 +23,7 @@ requirements:
     - perl *
     #  make check requirement:
     - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
   run:
     - m4
     - perl *
