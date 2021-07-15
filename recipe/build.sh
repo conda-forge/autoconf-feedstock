@@ -1,12 +1,5 @@
 #!/bin/sh
 
-pushd build-aux
-  rm config.guess
-  curl -o config.guess 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
-  rm config.sub
-  curl -o config.sub 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
-popd
-
 ./configure --prefix=${PREFIX}        \
             --libdir=${PREFIX}/lib    \
             --build=${BUILD}          \
