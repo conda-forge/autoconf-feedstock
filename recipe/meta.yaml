@@ -33,8 +33,11 @@ test:
 
 about:
   home: http://www.gnu.org/software/autoconf/
-  license: GPL-3.0
-  license_file: COPYING
+  license: GPL-3.0-or-later
+  license_file:
+    - COPYING
+    - COPYINGv3
+    - COPYING.EXCEPTION
   summary: Extensible M4 macros that produce shell scripts to configure software source code packages.
   description: |
     Autoconf is a tool for producing shell scripts that automatically configure
