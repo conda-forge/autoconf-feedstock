@@ -26,6 +26,7 @@ requirements:
     - make
     - curl
     - help2man
+    - m4
   host:
     - m4
     - perl 5.*
