@@ -20,19 +20,18 @@ build:
 
 requirements:
   build:
-    - gnuconfig
     #  make check requirement:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - libtool
     - make
     - curl
     - help2man
+    - gnuconfig
     - m4
   host:
     - m4
     - perl 5.*
-    #  make check requirement:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
   run:
     - m4
     - perl 5.*
