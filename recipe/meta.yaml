@@ -29,6 +29,7 @@ requirements:
     - help2man
     - gnuconfig
     - m4
+    - diffutils
   host:
     - m4
     - perl 5.*
