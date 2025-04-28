@@ -1,0 +1,90 @@
+From 074950c84b3d11fc63ddb4f5317ca85656a60bd9 Mon Sep 17 00:00:00 2001
+From: Paul Eggert <egg...@cs.ucla.edu>
+Date: Wed, 1 Jan 2025 13:30:26 -0800
+Subject: [PATCH 3/3] Fix test failure on macOS 15.1.1
+
+Problem reported by Sean Denny in:
+https://lists.gnu.org/r/bug-autoconf/2024-12/msg00001.html
+* doc/autoconf.texi (Limitations of Builtins):
+Document the macOS sh bug.
+* tests/base.at (AC_CACHE_CHECK):
+* tests/local.at: Use test -ot rather than ls -t, as POSIX
+requires the former to work reliably, but does not require the
+latter (POSIX does not require a stable sort for ls -t).
+Somewhat ironically, this should work around the macOS bug
+because the use of its buggy test -ot should increase the
+timestamp resolution to 1 s.
+---
+ doc/autoconf.texi | 10 +++++++++-
+ tests/base.at     |  2 +-
+ tests/local.at    | 13 +++----------
+ 3 files changed, 13 insertions(+), 12 deletions(-)
+
+diff --git a/doc/autoconf.texi b/doc/autoconf.texi
+index b594236..bc8c0bf 100644
+--- a/doc/autoconf.texi
++++ b/doc/autoconf.texi
+@@ -18765,10 +18765,18 @@ the host system.  But occasionally you may find it necessary to check
+ whether some arbitrary file exists.  To do so, use @samp{test -f},
+ @samp{test -r}, or @samp{test -x}.  Do not use @samp{test -e}, because
+ Solaris 10 @command{/bin/sh}
+-lacks it.  To test for symbolic links on systems that have them, use
++lacks it.
++
++To test for symbolic links on systems that have them, use
+ @samp{test -h} rather than @samp{test -L}; either form conforms to
+ Posix 1003.1-2001, but @option{-h} has been around longer.
+ 
++The commands @samp{test A -ot B} and @samp{test A -nt B} are not reliable
++on macOS @command{sh} through at least macOS Sequoia 15.1.1 (2024),
++where @samp{test} ignores the subsecond part of file timestamps.
++To work around this bug, arrange for the timestamps to be at least one
++second apart.
++
+ For historical reasons, Posix reluctantly allows implementations of
+ @samp{test -x} that will succeed for the root user, even if no execute
+ permissions are present.  Furthermore, shells do not all agree on
+diff --git a/tests/base.at b/tests/base.at
+index 1806aee..7f125f5 100644
+--- a/tests/base.at
++++ b/tests/base.at
+@@ -729,7 +729,7 @@ AT_CHECK([grep cache stdout], [0], [ignore])
+ : > a-stamp-file
+ AT_CHECK_CONFIGURE([], [], [stdout])
+ AT_CHECK([grep cache stdout], [1])
+-AT_CHECK([LC_ALL=C ls -t config.cache a-stamp-file | sed 1q | grep config.cache], [1])
++AT_CHECK([test config.cache -ot a-stamp-file])
+ 
+ # Using a symlinked cache file works.
+ : > cache
+diff --git a/tests/local.at b/tests/local.at
+index 95b5f15..8ad99c1 100644
+--- a/tests/local.at
++++ b/tests/local.at
+@@ -137,10 +137,7 @@ then
+ fi
+ 
+ # In order to catch current-generation FAT out, we must *modify* files
+-# that already exist; the *creation* timestamp is finer.  Use names
+-# that make ls -t sort them differently when they have equal
+-# timestamps than when they have distinct timestamps, keeping
+-# in mind that ls -t prints the *newest* file first.
++# that already exist; the *creation* timestamp is finer.
+ rm -f conftest.ts?
+ : > conftest.ts1
+ : > conftest.ts2
+@@ -157,12 +154,8 @@ for at_try_res in $at_try_resolutions; do
+   sleep $at_try_res
+   echo gamma > conftest.ts3
+ 
+-  # We assume that 'ls -t' will make use of high-resolution
+-  # timestamps if the operating system supports them at all.
+-  set X `ls -t conftest.ts?`
+-  if test "$[]2" = conftest.ts3 &&
+-     test "$[]3" = conftest.ts2 &&
+-     test "$[]4" = conftest.ts1; then
++  if test conftest.ts1 -ot conftest.ts2 &&
++     test conftest.ts2 -ot conftest.ts3; then
+     at_ts_resolution=$at_try_res
+     break
+   fi

@@ -1,7 +1,7 @@
-From 750c682ecb2ed997eb7796114c959406d0344541 Mon Sep 17 00:00:00 2001
+From 4ac278b2227b3da6303d565554a512705ce1f6b5 Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Tue, 27 Jun 2017 09:22:22 +0100
-Subject: [PATCH 2/2] Add use lib '.'; to auto{scan,header}.in
+Subject: [PATCH 2/3] Add use lib '.'; to auto{scan,header}.in
 
 Perl 5.25.11 removed this.
 ---
@@ -10,7 +10,7 @@ Perl 5.25.11 removed this.
  2 files changed, 8 insertions(+)
 
 diff --git a/bin/autoheader.in b/bin/autoheader.in
-index a5be61b..de1edfe 100644
+index 1c62261..91edbef 100644
 --- a/bin/autoheader.in
 +++ b/bin/autoheader.in
 @@ -48,6 +48,10 @@ use Autom4te::Configure_ac;
@@ -25,7 +25,7 @@ index a5be61b..de1edfe 100644
  # These vars must be package globals so they can be accessed by code
  # evaluated via 'do FILE', below.
 diff --git a/bin/autoscan.in b/bin/autoscan.in
-index eb01f92..67cde05 100644
+index 7373eae..1b363f1 100644
 --- a/bin/autoscan.in
 +++ b/bin/autoscan.in
 @@ -42,6 +42,10 @@ BEGIN
@@ -39,6 +39,3 @@ index eb01f92..67cde05 100644
  
  use Autom4te::ChannelDefs;
  use Autom4te::Configure_ac;
--- 
-2.37.1 (Apple Git-137.1)
-

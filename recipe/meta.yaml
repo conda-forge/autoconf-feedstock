@@ -10,6 +10,8 @@ source:
   patches:
     - 0001-Patch-shebang.patch
     - 0002-Add-use-lib-.-to-auto-scan-header-.in.patch
+    # https://www.mail-archive.com/bug-autoconf@gnu.org/msg05487.html
+    - 0003-Fix-test-failure-on-macOS-15.1.1.patch
 
 build:
   number: 0
@@ -30,6 +32,7 @@ requirements:
     - gnuconfig
     - m4
     - diffutils
+    - texinfo
   host:
     - m4
     - perl 5.*
