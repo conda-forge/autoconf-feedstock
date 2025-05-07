@@ -18,6 +18,8 @@ build:
   skip: true  # [win]
   ignore_run_exports_from:
     - perl 5.*
+    - {{ stdlib('cxx') }}
+    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
 
 requirements:
