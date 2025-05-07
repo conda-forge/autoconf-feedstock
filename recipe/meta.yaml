@@ -23,6 +23,7 @@ build:
 requirements:
   build:
     #  make check requirement:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - libtool
