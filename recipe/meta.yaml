@@ -1,4 +1,4 @@
-{% set version = "2.71" %}
+{% set version = "2.72" %}
 
 package:
   name: autoconf
@@ -6,32 +6,39 @@ package:
 
 source:
   url: http://ftp.gnu.org/gnu/autoconf/autoconf-{{ version }}.tar.gz
-  sha256: 431075ad0bf529ef13cb41e9042c542381103e80015686222b8a9d4abef42a1c
+  sha256: afb181a76e1ee72832f6581c0eddf8df032b83e2e0239ef79ebedc4467d92d6e
   patches:
     - 0001-Patch-shebang.patch
     - 0002-Add-use-lib-.-to-auto-scan-header-.in.patch
+    # https://www.mail-archive.com/bug-autoconf@gnu.org/msg05487.html
+    - 0003-Fix-test-failure-on-macOS-15.1.1.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
   ignore_run_exports_from:
     - perl 5.*
+    - {{ stdlib('cxx') }}
+    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
 
 requirements:
   build:
-    - gnuconfig
     #  make check requirement:
+    - {{ stdlib('c') }}
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - libtool
     - make
     - curl
     - help2man
+    - gnuconfig
+    - m4
+    - diffutils
+    - texinfo
   host:
     - m4
     - perl 5.*
-    #  make check requirement:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
   run:
     - m4
     - perl 5.*
