@@ -1,11 +1,12 @@
-{% set version = "2.72" %}
+context:
+  version: "2.72"
 
 package:
   name: autoconf
-  version: {{ version }}
+  version: "${{ version }}"
 
 source:
-  url: http://ftp.gnu.org/gnu/autoconf/autoconf-{{ version }}.tar.gz
+  url: http://ftp.gnu.org/gnu/autoconf/autoconf-${{ version }}.tar.gz
   sha256: afb181a76e1ee72832f6581c0eddf8df032b83e2e0239ef79ebedc4467d92d6e
   patches:
     - 0001-Patch-shebang.patch
@@ -14,21 +15,18 @@ source:
     - 0003-Fix-test-failure-on-macOS-15.1.1.patch
 
 build:
-  number: 1
-  skip: true  # [win]
-  ignore_run_exports_from:
-    - perl 5.*
-    - {{ stdlib('cxx') }}
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+  number: 2
+  skip: win
 
 requirements:
   build:
     #  make check requirement:
-    - {{ stdlib('c') }}
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+    - ${{ stdlib('c') }}
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
     - libtool
+    - automake
+    - autoconf
     - make
     - curl
     - help2man
@@ -42,15 +40,22 @@ requirements:
   run:
     - m4
     - perl 5.*
+  ignore_run_exports:
+    from_package:
+      - perl
+      - ${{ compiler('c') }}
+      - ${{ compiler('cxx') }}
 
-test:
-  commands:
+
+tests:
+  - script:
     - autoconf --help
     - autoreconf --help
-    - cat $PREFIX/bin/autom4te | grep -v "_build_env"  # [unix]
+    - cat $PREFIX/bin/autom4te | grep -v "build_env"  # [unix]
+    - cat $PREFIX/bin/autoupdate | grep -v "build_env"  # [unix]
 
 about:
-  home: http://www.gnu.org/software/autoconf/
+  homepage: http://www.gnu.org/software/autoconf/
   license: GPL-3.0-or-later
   license_file:
     - COPYING
@@ -62,8 +67,8 @@ about:
     software source code packages to adapt to many kinds of Posix-like systems.
     The configuration scripts produced by Autoconf are independent of Autoconf
     when they are run, so their users do not need to have Autoconf.
-  doc_url: https://www.gnu.org/software/autoconf/manual/autoconf.html
-  dev_url: http://git.sv.gnu.org/r/autoconf.git
+  documentation: https://www.gnu.org/software/autoconf/manual/autoconf.html
+  repository: http://git.sv.gnu.org/r/autoconf.git
 
 extra:
   recipe-maintainers:
