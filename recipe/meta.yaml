@@ -33,6 +33,7 @@ requirements:
     - curl
     - help2man
     - gnuconfig
+    - m4
     - diffutils
     - texinfo
   host:
