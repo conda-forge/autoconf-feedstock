@@ -49,8 +49,8 @@ tests:
   - script:
     - autoconf --help
     - autoreconf --help
-    - cat $PREFIX/bin/autom4te | grep -v "_build_env"  # [unix]
-    - cat $PREFIX/bin/autoupdate | grep -v "_build_env"  # [unix]
+    - cat $PREFIX/bin/autom4te | grep -v "build_env"  # [unix]
+    - cat $PREFIX/bin/autoupdate | grep -v "build_env"  # [unix]
 
 about:
   homepage: http://www.gnu.org/software/autoconf/
