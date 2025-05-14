@@ -26,6 +26,7 @@ requirements:
     - ${{ compiler('cxx') }}
     - libtool
     - automake
+    - autoconf
     - make
     - curl
     - help2man
