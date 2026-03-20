@@ -1,4 +1,4 @@
-{% set version = "2.72" %}
+{% set version = "2.73" %}
 
 package:
   name: autoconf
@@ -6,7 +6,7 @@ package:
 
 source:
   url: http://ftp.gnu.org/gnu/autoconf/autoconf-{{ version }}.tar.gz
-  sha256: afb181a76e1ee72832f6581c0eddf8df032b83e2e0239ef79ebedc4467d92d6e
+  sha256: 259ddfa3bddc799cfb81489cc0f17dfdf1bd6d1505dda53c0f45ff60d6a4f9a7
   patches:
     - 0001-Patch-shebang.patch
     - 0002-Add-use-lib-.-to-auto-scan-header-.in.patch
@@ -14,7 +14,7 @@ source:
     - 0003-Fix-test-failure-on-macOS-15.1.1.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
   ignore_run_exports_from:
     - perl 5.*
