@@ -20,3 +20,6 @@ make install
 
 sed -i.bak "s@${BUILD_PREFIX}/bin/m4@${PREFIX}/bin/m4@g" ${PREFIX}/bin/autom4te
 rm ${PREFIX}/bin/autom4te.bak
+
+sed -i.bak "s@${BUILD_PREFIX}/bin/m4@${PREFIX}/bin/m4@g" ${PREFIX}/bin/autoupdate
+rm ${PREFIX}/bin/autoupdate.bak

@@ -18,7 +18,6 @@ software source code packages to adapt to many kinds of Posix-like systems.
 The configuration scripts produced by Autoconf are independent of Autoconf
 when they are run, so their users do not need to have Autoconf.
 
-
 Current build status
 ====================
 
