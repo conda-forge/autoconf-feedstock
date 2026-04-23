@@ -14,7 +14,7 @@ source:
     - 0003-Fix-test-failure-on-macOS-15.1.1.patch
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
   ignore_run_exports_from:
     - perl 5.*
@@ -48,6 +48,7 @@ test:
     - autoconf --help
     - autoreconf --help
     - cat $PREFIX/bin/autom4te | grep -v "_build_env"  # [unix]
+    - cat $PREFIX/bin/autoupdate | grep -v "_build_env"  # [unix]
 
 about:
   home: http://www.gnu.org/software/autoconf/
